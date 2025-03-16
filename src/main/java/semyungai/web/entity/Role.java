@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @RequiredArgsConstructor
 public enum Role {
-    STUDENT("ROLE_USER"),
+    STUDENT("ROLE_STUDENT"),
     TEACHER("ROLE_TEACHER"),
     ADMIN("ROLE_ADMIN");
 

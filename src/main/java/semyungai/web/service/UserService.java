@@ -15,13 +15,14 @@ public class UserService {
     private final UserRepository userRepository;
 
     public ResponseEntity<?> signUp(UserEntity user){
-        System.out.println(user.getRole());
-        Optional<UserEntity> existingUser = userRepository.findByUsernameAndEmail(user.getUsername(), user.getEmail());
-        if(existingUser.isPresent()){
+        System.out.println(user.getRole().getClass());
+        UserEntity existingUser = userRepository.findByUsername(user.getUsername());
+        if(!(existingUser == null)){
             return ResponseEntity.status(400).body("동일한 유저가 존재합니다");
         }
         userRepository.save(user);
 
         return ResponseEntity.ok(new AuthDto.resDto(user.getUsername(), user.getEmail()));
     }
+
 }

@@ -1,57 +1,51 @@
-package semyungai.web.config;
+package semyungai.web.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import semyungai.web.entity.UserEntity;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final String username;
-    private final String password;
-    private final String email;
-    private final String role;
+    private final UserEntity userEntity;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(() -> role);
+        return Collections.singleton(new SimpleGrantedAuthority(userEntity.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return userEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return userEntity.getUsername();
     }
-
-//    public String getEmail(){
-//        return this.email;
-//    }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 }
