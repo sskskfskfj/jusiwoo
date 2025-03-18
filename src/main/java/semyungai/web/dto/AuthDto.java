@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import semyungai.web.entity.UserEntity;
 
+import java.util.Map;
+
 public class AuthDto {
     @Getter
     @Setter
@@ -19,7 +21,6 @@ public class AuthDto {
         private String password;
 
     }
-
     @Getter
     @Setter
     @Builder
@@ -35,9 +36,9 @@ public class AuthDto {
 
         public UserEntity toEntity(){
             return UserEntity.builder()
+                    .email(this.email)
                     .username(this.username)
                     .password(this.password)
-                    .email(this.email)
                     .build();
         }
     }
@@ -52,5 +53,42 @@ public class AuthDto {
             this.username = username;
             this.email = email;
         }
+    }
+
+    public static class GoogleResponse implements OAuth2Response{
+
+        private final Map<String, Object> attribute;
+
+        public GoogleResponse(Map<String, Object> attribute){
+            this.attribute = attribute;
+        }
+
+        @Override
+        public String getProvider() {
+            return "google";
+        }
+
+        @Override
+        public String getProviderId() {
+            return attribute.get("sub").toString();
+        }
+
+        @Override
+        public String getEmail() {
+            return attribute.get("email").toString();
+        }
+
+        @Override
+        public String getName() {
+            return attribute.get("name").toString();
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class UserDto{
+        private String username;
+        private String name;
+        private String role;
     }
 }

@@ -1,32 +1,41 @@
 package semyungai.web.dto;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import semyungai.web.entity.UserEntity;
 
 import java.util.Collection;
-import java.util.Collections;
 
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final UserEntity userEntity;
+    private String username;
+    private String password;
+//    private String email;
+    private Collection<? extends GrantedAuthority> authorities;
+
+    @Builder
+    public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities){
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(userEntity.getRole().name()));
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return userEntity.getPassword();
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return userEntity.getUsername();
+        return this.username;
     }
 
     @Override

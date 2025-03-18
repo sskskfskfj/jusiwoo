@@ -39,12 +39,13 @@ public class AuthController {
             return BindingResultErr.getBindingResultErr(bindingResult);
         }
         String encodedPassword = encoder.encode(dto.getPassword());
-        System.out.println(encodedPassword);
+        log.info("encoded password {}", encodedPassword);
 
         UserEntity user = UserEntity.builder()
                 .username(dto.getUsername())
-                .password(encodedPassword)
+                .name(null)
                 .email(dto.getEmail())
+                .password(encodedPassword)
                 .build();
 
         ResponseEntity<?> resUser = userService.signUp(user);
@@ -54,15 +55,21 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthDto.login dto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
+        // authenticationManger -> daoAuthenticationProvider UsernamePasswordAuthentication token 전달
+        // daoAuthenticationProvider -> customUserDetailsService loadByUserName 존재하는지 확인
+        // authentication 으로 customUserDetails 반환
+
         log.info(dto.getUsername());
 
+        // securityContextHolder 에 authentication 객체 저장
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtUtil.generateToken(dto.getUsername(), "STUDENT");
         log.info(jwt);
 
         return ResponseEntity.ok().body(jwt);
     }
+
+
 
     @GetMapping("/test")
     public String test(){
