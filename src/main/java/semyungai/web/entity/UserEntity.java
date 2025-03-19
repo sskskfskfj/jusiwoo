@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "user")
@@ -30,6 +32,9 @@ public class UserEntity extends BaseTimeEntity{
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostEntity> post;
 
     @Builder
     public UserEntity(String username, String name, String password, String email){
