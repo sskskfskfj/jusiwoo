@@ -1,9 +1,8 @@
-package semyungai.web.service;
+package semyungai.web.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import semyungai.web.dto.AuthDto;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -15,12 +15,7 @@ import semyungai.web.config.err.BindingResultErr;
 import semyungai.web.config.jwt.JwtTokenProvider;
 import semyungai.web.dto.AuthDto;
 import semyungai.web.entity.UserEntity;
-import semyungai.web.service.UserService;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
+import semyungai.web.service.UserSignUpService;
 
 @Slf4j
 @RestController
@@ -28,7 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
+    private final UserSignUpService userSignUpService;
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtUtil;
@@ -43,12 +38,12 @@ public class AuthController {
 
         UserEntity user = UserEntity.builder()
                 .username(dto.getUsername())
-                .name(null)
+                .name("")
                 .email(dto.getEmail())
                 .password(encodedPassword)
                 .build();
 
-        ResponseEntity<?> resUser = userService.signUp(user);
+        ResponseEntity<?> resUser = userSignUpService.signUp(user);
         return ResponseEntity.ok(resUser);
     }
 
@@ -63,12 +58,15 @@ public class AuthController {
 
         // securityContextHolder 에 authentication 객체 저장
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtil.generateToken(dto.getUsername(), "STUDENT");
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info(username);
+
+        String jwt = jwtUtil.generateToken(username, "STUDENT");
         log.info(jwt);
 
         return ResponseEntity.ok().body(jwt);
     }
-
 
 
     @GetMapping("/test")

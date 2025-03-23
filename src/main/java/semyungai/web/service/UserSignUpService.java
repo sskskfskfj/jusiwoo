@@ -3,17 +3,17 @@ package semyungai.web.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import semyungai.web.dto.AuthDto;
 import semyungai.web.entity.UserEntity;
 import semyungai.web.repository.UserRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserSignUpService {
     private final UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<?> signUp(UserEntity user){
         UserEntity existingUser = userRepository.findByUsername(user.getUsername());
         if(!(existingUser == null)){

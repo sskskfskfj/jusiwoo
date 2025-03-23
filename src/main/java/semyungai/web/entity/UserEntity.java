@@ -15,12 +15,13 @@ import java.util.List;
 public class UserEntity extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false, name = "username", unique = true)
     private String username;
 
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     private String name;
 
     @Column(nullable = false, name = "email", unique = true)
@@ -42,7 +43,7 @@ public class UserEntity extends BaseTimeEntity{
         this.name = name;
         this.password = password;
         this.email = email;
-        this.role = Role.STUDENT;
+        this.role = Role.TEACHER;
     }
 
     public void update(String name, String email){

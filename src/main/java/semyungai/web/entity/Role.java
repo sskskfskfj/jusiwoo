@@ -2,7 +2,6 @@ package semyungai.web.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor

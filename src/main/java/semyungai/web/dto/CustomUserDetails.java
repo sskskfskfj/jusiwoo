@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private String username;

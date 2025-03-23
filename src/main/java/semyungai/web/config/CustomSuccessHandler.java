@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import semyungai.web.config.jwt.JwtTokenProvider;
-import semyungai.web.service.CustomOAuth2User;
+import semyungai.web.dto.CustomOAuth2User;
 
 import java.io.IOException;
 import java.util.Collection;

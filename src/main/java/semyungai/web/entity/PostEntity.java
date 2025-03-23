@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "post")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostEntity {
+public class PostEntity extends BaseTimeEntity{
     @Id
     @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class PostEntity {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
@@ -31,5 +31,10 @@ public class PostEntity {
         this.title = title;
         this.content = content;
         this.user = user;
+    }
+
+    public void updatePost(String title, String content){
+        this.title = title;
+        this.content = content;
     }
 }

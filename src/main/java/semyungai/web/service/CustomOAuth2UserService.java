@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import semyungai.web.dto.AuthDto;
+import semyungai.web.dto.CustomOAuth2User;
 import semyungai.web.dto.OAuth2Response;
 import semyungai.web.entity.UserEntity;
 import semyungai.web.repository.UserRepository;
