@@ -23,14 +23,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public ResponseEntity<?> getAllPost(){
         postRepository.flush();
         List<PostEntity> list = postRepository.findAll();
         // todo: 순환 참조 해결
-        return ResponseEntity.ok().body(list.getFirst());
+        return ResponseEntity.ok().body(list);
     }
 
     @Transactional

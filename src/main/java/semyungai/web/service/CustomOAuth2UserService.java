@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import semyungai.web.dto.AuthDto;
 import semyungai.web.dto.CustomOAuth2User;
 import semyungai.web.dto.OAuth2Response;
+import semyungai.web.entity.Role;
 import semyungai.web.entity.UserEntity;
 import semyungai.web.repository.UserRepository;
 
@@ -42,6 +43,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .name(oAuth2Response.getName())
                     .email(oAuth2Response.getEmail())
                     .password("")
+                    .role(Role.STUDENT)
                     .build();
 
             userRepository.save(user);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import semyungai.web.config.err.BindingResultErr;
 import semyungai.web.config.jwt.JwtTokenProvider;
 import semyungai.web.dto.AuthDto;
+import semyungai.web.entity.Role;
 import semyungai.web.entity.UserEntity;
 import semyungai.web.service.UserSignUpService;
 
@@ -41,6 +42,7 @@ public class AuthController {
                 .name("")
                 .email(dto.getEmail())
                 .password(encodedPassword)
+                .role(Role.TEACHER)
                 .build();
 
         ResponseEntity<?> resUser = userSignUpService.signUp(user);
@@ -60,9 +62,10 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info(username);
 
-        String jwt = jwtUtil.generateToken(username, "STUDENT");
+        log.info(authentication.getAuthorities().toString());
+
+        String jwt = jwtUtil.generateToken(username, authentication.getAuthorities().toString());
         log.info(jwt);
 
         return ResponseEntity.ok().body(jwt);

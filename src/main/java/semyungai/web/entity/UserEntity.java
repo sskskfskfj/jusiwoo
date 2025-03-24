@@ -1,5 +1,7 @@
 package semyungai.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,15 +37,16 @@ public class UserEntity extends BaseTimeEntity{
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<PostEntity> post;
 
     @Builder
-    public UserEntity(String username, String name, String password, String email){
+    public UserEntity(String username, String name, String password, String email, Role role){
         this.username = username;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.role = Role.TEACHER;
+        this.role = role;
     }
 
     public void update(String name, String email){
